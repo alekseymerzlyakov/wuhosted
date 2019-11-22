@@ -1,0 +1,68 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Western Union</title>
+    <meta charset="utf-8">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1"><style>html {
+            height: 100%;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100%;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        header {
+            height: 80px;
+            background-color: #212a33;
+            font-size: 20px;
+            font-weight: bold;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        footer {
+            height: 80px;
+            background-color: #777777;
+            font-size: 20px;
+            font-weight: bold;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+    <link rel="shortcut icon" href="https://kenya.uat.wuamerigo.com/favicon.png">
+
+<script type="text/javascript" src="https://kenya.uat.wuamerigo.com/wuHosted.js?da691be54d0f14508652"></script>
+</head>
+<body>
+
+<header>Partner bank header</header><div id="root"></div><footer>Partner bank footer</footer>
+{{if .Available}}
+    <p>Available</p>
+{{end}}
+<script type="text/javascript">WUHosted.init({
+        container: document.getElementById('root'),
+        publicKey: 'x2SZaJp',
+
+        jwt: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpemF0aW9uX2NvZGUiOiI4M1U5QUdORjBFVVIxOFI3SkhGS0dTTlVXS1lDSTRYWiJ9.wwGYPFL5qkcZmYCRMJIZDUHZARaHjtLyzDr78mqG66E=',
+        unixtime: Math.round(new Date().getTime() / 1000).toString(),
+        lang: 'en',
+        action: 'send',
+        settings: {
+            logo: 'https://kenya.uat.wuamerigo.com/static/ae_logo.png'
+        },
+        start_with_history: true,
+        country: 'kenya'
+    });
+
+</script>
+</body>
+</html>
