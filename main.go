@@ -21,7 +21,7 @@ func main() {
 
 	//request.ReqGet()
 
-	http.HandleFunc("/", IndexHandler)
+	http.HandleFunc("/", routes.IndexHandler)
 
 	http.ListenAndServe(":8181", nil)
 }
