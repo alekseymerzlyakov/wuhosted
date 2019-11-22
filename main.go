@@ -23,5 +23,5 @@ func main() {
 
 	http.HandleFunc("/", routes.IndexHandler)
 
-	http.ListenAndServe(":80", nil)
+	http.ListenAndServe(":8080", nil)
 }
