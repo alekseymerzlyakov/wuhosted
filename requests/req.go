@@ -8,9 +8,9 @@ import (
 	"net/http"
 	"time"
 )
-type Tokens struct {
-	Country,Domain, Path, Authorization string
-}
+//type Tokens struct {
+//	Country,Domain, Path, Authorization string
+//}
 
 type respo struct {
 	Access_Token string `json:"Access-Token"`

@@ -98,16 +98,21 @@ func Authorize(url, Access_Token string) string {
 	//Parse JSON
 
 
-	var respo1  Respon;
-	//textBytes := []byte(body)
-	//respo1 := Respon{}
-	jsonErr := json.Unmarshal(body, &respo1.Authoriz)
+	//var respon  Respon;
+	textBytes := []byte(body)
+	respon := Respon{}
+	jsonErr := json.Unmarshal(textBytes, &respon)
 	if jsonErr != nil {
 		fmt.Println(jsonErr)
-		panic(http.StatusNotAcceptable)
+		//panic(http.StatusNotAcceptable)
 	}
 
-	fmt.Printf("authorization_code     =======>>>>>>>>        " +  respo1.Authoriz)
-	fmt.Printf("action_info            =======>>>>>>>>        " +  respo1.Action_info)
-	return respo1.Authoriz
+
+
+
+
+
+	fmt.Printf("authorization_code     =======>>>>>>>>        " +  respon.Authoriz)
+	fmt.Printf("action_info            =======>>>>>>>>        " +  respon.Action_info)
+	return respon.Authoriz
 }
