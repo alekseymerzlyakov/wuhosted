@@ -5,13 +5,6 @@ import (
 	"net/http"
 )
 
-type ViewData struct{
-	Available bool
-}
-
-
-
-
 func main() {
 
 	routes.JWT()
