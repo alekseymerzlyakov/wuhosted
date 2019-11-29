@@ -35,7 +35,7 @@ func Authorize(url, Access_Token string) string {
     	"id_number": " 111211116 ",
 	"id_issuer": "KE",
 	"id_expires": true,
-	"id_expiration": "2020-12-23"
+	"id_expiration": "2020-12-24"
   },
   "bank_accounts": [
 	{
@@ -107,12 +107,6 @@ func Authorize(url, Access_Token string) string {
 		//panic(http.StatusNotAcceptable)
 	}
 
-
-
-
-
-
 	fmt.Printf("authorization_code     =======>>>>>>>>        " +  respon.Authoriz)
-	fmt.Printf("action_info            =======>>>>>>>>        " +  respon.Action_info)
 	return respon.Authoriz
 }

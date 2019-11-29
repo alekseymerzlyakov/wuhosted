@@ -4,16 +4,31 @@ import (
 	"crypto/hmac"
 	"crypto/sha256"
 	"encoding/base64"
-	_ "encoding/json"
 	"fmt"
 	"github.com/alekseymerzlyakov/wuhosted/requests"
+	"github.com/magiconair/properties"
+	log "github.com/Sirupsen/logrus"
+	"os"
 )
 
-var HashSt string
-var ClientID string = "KE932150"
-var Secret_Key string = "OAjP#hhV67FLPv_K3SXSIPbh"
-var Aus string = ClientID + ":" + Secret_Key
+//var path string
+func path () string {
+	path, err := os.Getwd()
+	if err != nil {
+		log.Println(err)
+	}
+	return path
+}
 
+func getString(key string) string {
+	p := properties.MustLoadFile(path() + "/wu.properties", properties.UTF8)
+	return p.MustGet(key)
+}
+
+var HashSt string
+var ClientID string = getString("ClientID")
+var Secret_Key string = getString("Secret_Key")
+var Aus string = ClientID + ":" + Secret_Key
 var Access_Token string
 var authorize_code string
 var URLq string = "https://portal.kenya.uat.wuamerigo.com/admin/api/1/oauth2/token"
@@ -36,8 +51,12 @@ func Encoded(base string) string {
 
 
 func JWT ()  {
+
+	log.Error("Not fatal. An error. Won't stop execution")
+
 	//Token
 	Access_Token = requests.ReqGetAccess_Token(URLq, Encoded(Aus))
+	fmt.Println("\n Aus         ----------->>>>>>>>         " + Aus)
 	fmt.Println("\n Access_Token         ----------->>>>>>>>         " + Access_Token)
 
 
@@ -55,8 +74,6 @@ func JWT ()  {
 	fmt.Printf("\n JWT_header_payload      --------------->>>        " + JWT_header_payload)
 	fmt.Printf("\n payload      --------------->>>        " + payload)
 
-
-
 }
 
 
@@ -70,12 +87,6 @@ func Hash(src string, secret string) string {
 	var jw = src + "." + base64.StdEncoding.EncodeToString(h.Sum(nil))
 	return jw
 }
-
-// isValidHash validates a hash againt a value
-func isValidHash(value string, hash string, secret string) bool {
-	return hash == Hash(value, secret)
-}
-
 
 
 

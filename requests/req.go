@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"log"
+	log "github.com/Sirupsen/logrus"
 	"net/http"
 	"time"
 )
@@ -33,6 +33,7 @@ func ReqGetAccess_Token(q, w string) string {
 	if err != nil {
 		log.Fatal("Error reading response. ", err)
 	}
+	log.Info(req)
 	defer resp.Body.Close()
 
 
@@ -52,7 +53,9 @@ func ReqGetAccess_Token(q, w string) string {
 	}
 	//fmt.Println("Access_Token         ----------->>>>>>>>         " + respo1.Access_Token)
 
-	fmt.Printf("%s\n", body)
+	//log.Infoln(resp.Header)
+	log.Infoln(resp.Body)
+	//fmt.Printf("%s\n", body)
 	return respo1.Access_Token
 }
 
