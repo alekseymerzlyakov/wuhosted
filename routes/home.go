@@ -1,21 +1,19 @@
 package routes
 
 import (
-	"fmt"
+	log "github.com/Sirupsen/logrus"
 	"html/template"
 	"net/http"
-	log "github.com/Sirupsen/logrus"
 )
 type ViewData struct{
 	Available bool
 	JW string
+	PublicKey string
 }
 
 
-
-
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("HashSt   ------->>>>   QQQQQQQQ      >>>>>         ")
+	JWT()
 	tmpl := template.Must(template.ParseFiles("template/index.html"))
 	log.Info(r.Header)
 	log.Info(r.Body)
@@ -23,8 +21,8 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	posts := ViewData{
 		Available: false,
 		JW: HashSt,
+		PublicKey: GetString("publicKey"),
 	}
-	fmt.Println("HashSt   ------->>>>   QQQQQQQQ      >>>>>         " + posts.JW)
 
 	tmpl.Execute(w, posts)
 }

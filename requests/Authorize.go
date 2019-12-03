@@ -3,9 +3,9 @@ package requests
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
+	log "github.com/Sirupsen/logrus"
+	"github.com/alekseymerzlyakov/wuhosted/routes"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"time"
 )
@@ -15,40 +15,44 @@ type Respon struct {
 	Action_info string `json:"action_info"`
 }
 
+
+
 // Post Request
 func Authorize(url, Access_Token string) string {
+
+
 
 	data := []byte(`{
   "customer_id": "526321446",
   "profile": {
-	"first_name": " Oleksii ",
-	"last_name": " Merzliakov ",
-	"street1": " street semafor4 ",
-	"city": " city Dnepr ",
-	"zip_code": " 12322 ",
-	"country": "KE",
-	"phone_country_code": "380",
-	"phone_number": " 993879792 ",
-	"birth": "1975-01-01",
-	"country_of_birth": "KE",
-	"id_type": "A",
-    	"id_number": " 111211116 ",
-	"id_issuer": "KE",
-	"id_expires": true,
-	"id_expiration": "2020-12-24"
+	"first_name": "` + routes.GetString("first_name") + `",
+	"last_name": "` + routes.GetString("last_name") + `",
+	"street1": "` + routes.GetString("street1") + `",
+	"city": "` + routes.GetString("city") + `",
+	"zip_code": "` + routes.GetString("zip_code") + `",
+	"country": "` + routes.GetString("country") + `",
+	"phone_country_code": "` + routes.GetString("phone_country_code") + `",
+	"phone_number": "` + routes.GetString("phone_number") + `",
+	"birth": "` + routes.GetString("birth") + `",
+	"country_of_birth": "` + routes.GetString("country_of_birth") + `",
+	"id_type": "` + routes.GetString("id_type") + `",
+    	"id_number": "` + routes.GetString("id_number") + `",
+	"id_issuer": "` + routes.GetString("id_issuer") + `",
+	"id_expires": ` + routes.GetString("id_expires") + `,
+	"id_expiration": "` + routes.GetString("id_expiration") + `"
   },
   "bank_accounts": [
 	{
-  	"account_number": "223456123456",
-  	"name": "Nata",
-  	"currency": "KES",
-  	"balance": "3323434"
+  	"account_number": "` + routes.GetString("account_number") + `",
+  	"name": "` + routes.GetString("name") + `",
+  	"currency": "` + routes.GetString("currency") + `",
+  	"balance": "` + routes.GetString("balance") + `"
 	},
 		{
-  	"account_number": "993456123456",
-  	"name": "Nata2",
-  	"currency": "KES",
-  	"balance": "9"
+  	"account_number": "` + routes.GetString("account_number2") + `",
+  	"name": "` + routes.GetString("name2") + `",
+  	"currency": "` + routes.GetString("currency2") + `",
+  	"balance": "` + routes.GetString("balance2") + `"
 	}
   ]
 }`)
@@ -61,7 +65,6 @@ func Authorize(url, Access_Token string) string {
 	// Set headers
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", "Bearer " + Access_Token)
-	//req.Header.Set("Host", "portal.kenya.uat.wuamerigo.com")
 
 	// Create and Add cookie to request
 	//cookie := http.Cookie{Name: "cookie_name", Value: "cookie_value"}
@@ -72,10 +75,9 @@ func Authorize(url, Access_Token string) string {
 
 	// Validate cookie and headers are attached
 	//fmt.Println(req.Cookies())
-	fmt.Println(req.Header)
-	fmt.Println("\n")
-	fmt.Println(req.Body)
-	fmt.Println("\n")
+	log.Info(req.Header)
+	log.Info(req.Body)
+
 
 	// Send request
 	resp, err := client.Do(req)
@@ -84,17 +86,15 @@ func Authorize(url, Access_Token string) string {
 	}
 	defer resp.Body.Close()
 
-	fmt.Println("response Status:", resp.Status)
-	fmt.Println("\n\n")
-	fmt.Println("response Headers:", resp.Header)
-	fmt.Println("\n\n")
+	log.Info("response Status:", resp.Status)
+	log.Println("response Headers:", resp.Header)
 
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		log.Fatal("Error reading body. ", err)
 	}
 
-	fmt.Printf("%s\n", body)
+	log.Info("%s\n", body)
 	//Parse JSON
 
 
@@ -103,10 +103,8 @@ func Authorize(url, Access_Token string) string {
 	respon := Respon{}
 	jsonErr := json.Unmarshal(textBytes, &respon)
 	if jsonErr != nil {
-		fmt.Println(jsonErr)
-		//panic(http.StatusNotAcceptable)
+		log.Fatal(jsonErr)
 	}
 
-	fmt.Printf("authorization_code     =======>>>>>>>>        " +  respon.Authoriz)
 	return respon.Authoriz
 }

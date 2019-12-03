@@ -7,10 +7,7 @@ import (
 
 func main() {
 	routes.Logrus()
-	routes.JWT()
-
 	http.HandleFunc("/", routes.IndexHandler)
-
 	http.ListenAndServe(":8080", nil)
 }
 
