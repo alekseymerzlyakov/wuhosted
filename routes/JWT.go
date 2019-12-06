@@ -5,7 +5,6 @@ import (
 	"crypto/sha256"
 	"encoding/base64"
 	log "github.com/Sirupsen/logrus"
-	"github.com/alekseymerzlyakov/wuhosted/requests"
 	"github.com/magiconair/properties"
 	"os"
 )
@@ -48,10 +47,10 @@ func Encoded(base string) string {
 
 func JWT ()  {
 	//Token
-	Access_Token = requests.ReqGetAccess_Token(URLq, Encoded(Aus))
+	Access_Token = ReqGetAccess_Token(URLq, Encoded(Aus))
 
 	//Authorize
-	authorize_code = requests.Authorize(urlAuthorize, Access_Token)
+	authorize_code = Authorize(urlAuthorize, Access_Token)
 
 	var header string = "{\"typ\":\"JWT\",\"alg\":\"HS256\"}"
 	var payload string = "{\"authorization_code\":\""+ authorize_code +"\"}"
