@@ -26,7 +26,7 @@ func ReqGetAccess_Token(q, w string) string {
 	}
 	//
 	req.Header.Set("Authorization", "Basic " + w)
-	client := &http.Client{Timeout: time.Second * 10}
+	client := &http.Client{Timeout: time.Second * 1000}
 
 	resp, err := client.Do(req)
 	if err != nil {
@@ -53,7 +53,7 @@ func ReqGetAccess_Token(q, w string) string {
 	//fmt.Println("Access_Token         ----------->>>>>>>>         " + respo1.Access_Token)
 
 	//log.Infoln(resp.Header)
-	log.Infoln(resp.Body)
+	//log.Infoln(resp.Body)
 	//fmt.Printf("%s\n", body)
 	return respo1.Access_Token
 }
