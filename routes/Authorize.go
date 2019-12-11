@@ -22,7 +22,7 @@ func Authorize(url, Access_Token string) string {
 
 
 	data := []byte(`{
-  "customer_id": "526321446",
+  "customer_id": "` + GetString("customer_id") + `",
   "profile": {
 	"first_name": "` + GetString("first_name") + `",
 	"last_name": "` + GetString("last_name") + `",
@@ -35,7 +35,7 @@ func Authorize(url, Access_Token string) string {
 	"birth": "` + GetString("birth") + `",
 	"country_of_birth": "` + GetString("country_of_birth") + `",
 	"id_type": "` + GetString("id_type") + `",
-    	"id_number": "` + GetString("id_number") + `",
+	"id_number": "` + GetString("id_number") + `",
 	"id_issuer": "` + GetString("id_issuer") + `",
 	"id_expires": ` + GetString("id_expires") + `,
 	"id_expiration": "` + GetString("id_expiration") + `"
