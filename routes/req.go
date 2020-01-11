@@ -2,11 +2,12 @@ package routes
 
 import (
 	"encoding/json"
-	log "github.com/Sirupsen/logrus"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"time"
 )
+
 //type Tokens struct {
 //	Country,Domain, Path, Authorization string
 //}
@@ -15,17 +16,15 @@ type respo struct {
 	Access_Token string `json:"Access-Token"`
 }
 
-
-
 func ReqGetAccess_Token(q, w string) string {
 
-// Get Request
+	// Get Request
 	req, err := http.NewRequest("GET", q, nil)
 	if err != nil {
 		log.Fatal("Error reading requests. ", err)
 	}
 	//
-	req.Header.Set("Authorization", "Basic " + w)
+	req.Header.Set("Authorization", "Basic "+w)
 	client := &http.Client{Timeout: time.Second * 1000}
 
 	resp, err := client.Do(req)
@@ -35,13 +34,11 @@ func ReqGetAccess_Token(q, w string) string {
 	log.Print(req)
 	defer resp.Body.Close()
 
-
 	// Получаем тело ответа
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		log.Fatal("Error reading body. ", err)
 	}
-
 
 	//Parse JSON
 	textBytes := []byte(body)
@@ -57,4 +54,3 @@ func ReqGetAccess_Token(q, w string) string {
 	//fmt.Printf("%s\n", body)
 	return respo1.Access_Token
 }
-

@@ -3,16 +3,16 @@ package routes
 import (
 	"encoding/json"
 	"fmt"
-	log "github.com/Sirupsen/logrus"
 	"github.com/magiconair/properties"
 	"html/template"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"os"
 )
 
 //var path string
-func path () string {
+func path() string {
 	path, err := os.Getwd()
 	if err != nil {
 		log.Println(err)
@@ -22,36 +22,35 @@ func path () string {
 
 //Open Properties file
 func GetString(key string) string {
-	p := properties.MustLoadFile(path() + "/wu.properties", properties.UTF8)
+	p := properties.MustLoadFile(path()+"/wu.properties", properties.UTF8)
 	return p.MustGet(key)
 }
 
-	var HashSt string
-	var ClientID string = GetString("ClientID")
-	var Secret_Key string = GetString("Secret_Key")
-	var Aus string = ClientID + ":" + Secret_Key
-	var Access_Token string
-	var authorize_code string
-	var URLq string = "https://" + GetString("URL") + "/admin/api/1/oauth2/token"
-	var UrlAuthorize string = "https://" + GetString("URL") + "/admin/api/1/customers/authorize"
-	var JWT_header_payload string
-	var Send_receive string
-	var Approv_Hold_Reject string
-	var URL_Admin string
-
+var HashSt string
+var ClientID string = GetString("ClientID")
+var Secret_Key string = GetString("Secret_Key")
+var Aus string = ClientID + ":" + Secret_Key
+var Access_Token string
+var authorize_code string
+var URLq string = "https://" + GetString("URL") + "/admin/api/1/oauth2/token"
+var UrlAuthorize string = "https://" + GetString("URL") + "/admin/api/1/customers/authorize"
+var JWT_header_payload string
+var Send_receive string
+var Approv_Hold_Reject string
+var URL_Admin string
 
 // Make token
 func Token() string {
 	return ReqGetAccess_Token(URLq, Encoded(Aus))
 }
 
-type ViewData struct{
+type ViewData struct {
 	Available bool
-	JW string
+	JW        string
 	PublicKey string
 }
 
-func IndexHandler(w http.ResponseWriter, r *http.Request)  {
+func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	Access_Token = Token()
 	JWT()
 	tmpl := template.Must(template.ParseFiles("template/index.html"))
@@ -60,23 +59,20 @@ func IndexHandler(w http.ResponseWriter, r *http.Request)  {
 
 	posts := ViewData{
 		Available: false,
-		JW: HashSt,
+		JW:        HashSt,
 		PublicKey: GetString("publicKey"),
 	}
 
 	tmpl.Execute(w, posts)
 }
 
-
-
-
-
-type IdNum struct{
+type IdNum struct {
 	IdNum string `json:"idnumber"`
-	List string `json:"list"`
+	List  string `json:"list"`
 }
+
 //Change status transaction
-func IndexApproveSend(w http.ResponseWriter, r *http.Request)  {
+func IndexApproveSend(w http.ResponseWriter, r *http.Request) {
 
 	requestBody, err := ioutil.ReadAll(r.Body)
 	if err != nil {
@@ -95,7 +91,6 @@ func IndexApproveSend(w http.ResponseWriter, r *http.Request)  {
 	// Select data from ajax
 	Id_Number_ := respo2.IdNum
 	List_ := respo2.List
-
 
 	switch portalUrl := List_; { // missing expression means "true"
 	case portalUrl == "notselected":
@@ -140,7 +135,4 @@ func IndexApproveSend(w http.ResponseWriter, r *http.Request)  {
 		w.Write([]byte(ChangeStatus(Id_Number_, URL_Admin, Access_Token)))
 	}
 
-
-
 }
-

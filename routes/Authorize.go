@@ -3,23 +3,18 @@ package routes
 import (
 	"bytes"
 	"encoding/json"
-	log "github.com/Sirupsen/logrus"
 	"io/ioutil"
 	"net/http"
 	"time"
 )
 
 type Respon struct {
-	Authoriz string `json:"authorization_code"`
+	Authoriz    string `json:"authorization_code"`
 	Action_info string `json:"action_info"`
 }
 
-
-
 // Post Request
 func Authorize(url, Access_Token string) string {
-
-
 
 	data := []byte(`{
   "customer_id": "` + GetString("customer_id") + `",
@@ -63,7 +58,7 @@ func Authorize(url, Access_Token string) string {
 
 	// Set headers
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", "Bearer " + Access_Token)
+	req.Header.Set("Authorization", "Bearer "+Access_Token)
 
 	// Create and Add cookie to request
 	//cookie := http.Cookie{Name: "cookie_name", Value: "cookie_value"}
@@ -76,7 +71,6 @@ func Authorize(url, Access_Token string) string {
 	//fmt.Println(req.Cookies())
 	log.Info(req.Header)
 	log.Info(req.Body)
-
 
 	// Send request
 	resp, err := client.Do(req)
@@ -95,7 +89,6 @@ func Authorize(url, Access_Token string) string {
 
 	log.Info("%s\n", body)
 	//Parse JSON
-
 
 	//var respon  Respon;
 	textBytes := []byte(body)
