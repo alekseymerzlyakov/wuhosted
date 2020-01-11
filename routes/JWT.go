@@ -4,6 +4,7 @@ import (
 	"crypto/hmac"
 	"crypto/sha256"
 	"encoding/base64"
+	"fmt"
 	log "github.com/Sirupsen/logrus"
 )
 
@@ -39,6 +40,7 @@ func Hash(src string, secret string) string {
 	h := hmac.New(sha256.New, key)
 	h.Write([]byte(src))
 	var jw = src + "." + base64.StdEncoding.EncodeToString(h.Sum(nil))
+	fmt.Printf(jw)
 	return jw
 }
 
