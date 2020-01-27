@@ -3,6 +3,7 @@ package routes
 import (
 	"bytes"
 	"encoding/json"
+	//log "github.com/sirupsen/logrus"
 	"io/ioutil"
 	"net/http"
 	"time"
@@ -53,7 +54,7 @@ func Authorize(url, Access_Token string) string {
 
 	req, err := http.NewRequest("PUT", url, bytes.NewBuffer(data))
 	if err != nil {
-		log.Fatal("Error reading requests. ", err)
+		//log.Fatal("Error reading requests. ", err)
 	}
 
 	// Set headers
@@ -69,25 +70,25 @@ func Authorize(url, Access_Token string) string {
 
 	// Validate cookie and headers are attached
 	//fmt.Println(req.Cookies())
-	log.Info(req.Header)
-	log.Info(req.Body)
+	//log.Info(req.Header)
+	//log.Info(req.Body)
 
 	// Send request
 	resp, err := client.Do(req)
 	if err != nil {
-		log.Fatal("Error reading response. ", err)
+		//log.Fatal("Error reading response. ", err)
 	}
 	defer resp.Body.Close()
 
-	log.Info("response Status:", resp.Status)
-	log.Println("response Headers:", resp.Header)
+	//log.Info("response Status:", resp.Status)
+	//log.Println("response Headers:", resp.Header)
 
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		log.Fatal("Error reading body. ", err)
+		//log.Fatal("Error reading body. ", err)
 	}
 
-	log.Info("%s\n", body)
+	//log.Info("%s\n", body)
 	//Parse JSON
 
 	//var respon  Respon;
@@ -95,7 +96,7 @@ func Authorize(url, Access_Token string) string {
 	respon := Respon{}
 	jsonErr := json.Unmarshal(textBytes, &respon)
 	if jsonErr != nil {
-		log.Fatal(jsonErr)
+		//log.Fatal(jsonErr)
 	}
 
 	return respon.Authoriz

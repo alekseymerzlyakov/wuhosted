@@ -4,9 +4,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/magiconair/properties"
+	//log "github.com/sirupsen/logrus"
 	"html/template"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"os"
 )
@@ -15,7 +15,7 @@ import (
 func path() string {
 	path, err := os.Getwd()
 	if err != nil {
-		log.Println(err)
+		//	log.Println(err)
 	}
 	return path
 }
@@ -54,8 +54,8 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	Access_Token = Token()
 	JWT()
 	tmpl := template.Must(template.ParseFiles("template/index.html"))
-	log.Info(r.Header)
-	log.Info(r.Body)
+	fmt.Println(r.Header)
+	fmt.Println(r.Body)
 
 	posts := ViewData{
 		Available: false,
@@ -76,16 +76,16 @@ func IndexApproveSend(w http.ResponseWriter, r *http.Request) {
 
 	requestBody, err := ioutil.ReadAll(r.Body)
 	if err != nil {
-		log.Info(err)
+		fmt.Println(err)
 	}
-	log.Debug(requestBody)
+	fmt.Println(requestBody)
 
 	//Parse JSON
 	textBytes := []byte(requestBody)
 	respo2 := IdNum{}
 	jsonErr := json.Unmarshal(textBytes, &respo2)
 	if err != nil {
-		log.Println(jsonErr)
+		fmt.Println(jsonErr)
 	}
 
 	// Select data from ajax

@@ -5,7 +5,7 @@ import (
 	"crypto/sha256"
 	"encoding/base64"
 	"fmt"
-	log "github.com/Sirupsen/logrus"
+	//log "github.com/Sirupsen/logrus"
 )
 
 type HashTag struct {
@@ -15,11 +15,11 @@ type HashTag struct {
 //Base64
 func Encoded(base string) string {
 	encoded := base64.StdEncoding.EncodeToString([]byte(base))
-	log.Println("encoded      " + encoded)
+	//log.Println("encoded      " + encoded)
 	return encoded
 }
 
-func JWT ()  {
+func JWT() {
 	//Token
 	//Access_Token = ReqGetAccess_Token(URLq, Encoded(Aus))
 
@@ -27,8 +27,8 @@ func JWT ()  {
 	authorize_code = Authorize(UrlAuthorize, Access_Token)
 
 	var header string = "{\"typ\":\"JWT\",\"alg\":\"HS256\"}"
-	var payload string = "{\"authorization_code\":\""+ authorize_code +"\"}"
-	JWT_header_payload  = Encoded(header) + "." + Encoded(payload)
+	var payload string = "{\"authorization_code\":\"" + authorize_code + "\"}"
+	JWT_header_payload = Encoded(header) + "." + Encoded(payload)
 	var secretKey string = GetString("secretKey")
 
 	HashSt = Hash(JWT_header_payload, secretKey)
@@ -43,6 +43,3 @@ func Hash(src string, secret string) string {
 	fmt.Printf(jw)
 	return jw
 }
-
-
-
