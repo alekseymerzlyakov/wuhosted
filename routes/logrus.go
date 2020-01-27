@@ -7,7 +7,7 @@ import (
 )
 
 func Logrus() {
-	var filename string = "logfile.log"
+	var filename string = "log.log"
 	//var filename string = "logfile.log"
 	// Create the log file if doesn't exist. And append to it if it already exists.
 	f, err := os.OpenFile(filename, os.O_WRONLY|os.O_APPEND|os.O_CREATE, 0755)
@@ -28,7 +28,7 @@ func Logrus() {
 		fmt.Println(err)
 	} else {
 		log.SetOutput(f)
-		//	fmt.Println(err)
+		fmt.Println(err)
 		//} else {
 		//log.SetOutput(f)
 	}

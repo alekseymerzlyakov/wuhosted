@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	//routes.Logrus()
+	routes.Logrus()
 	http.HandleFunc("/", routes.IndexHandler)
 	http.HandleFunc("/approvesend", routes.IndexApproveSend)
 	http.ListenAndServe(":8080", nil)
