@@ -152,9 +152,9 @@
 
 
     </style>
-    <link rel="shortcut icon" href="https://kenya.pi.wuamerigo.com/favicon.png">
+    <link rel="shortcut icon" href="https://kenya.{{ .ENV }}.wuamerigo.com/favicon.png">
 
-    <script type="text/javascript" src="https://kenya.pi.wuamerigo.com/wuHosted.js?da691be54d0f14508652"></script>
+    <script type="text/javascript" src="https://kenya.{{ .ENV }}.wuamerigo.com/wuHosted.js?da691be54d0f14508652"></script>
 </head>
 <body>
 
@@ -262,13 +262,24 @@
             <script type="text/javascript">WUHosted.init({
                     container: document.getElementById('root'),
                     publicKey: '{{ .PublicKey }}',
-
                     jwt: '{{ .JW }}',
                     unixtime: Math.round(new Date().getTime() / 1000).toString(),
                     lang: 'en',
                     action: 'history',
                     settings: {
-                        logo: 'https://kenya.pi.wuamerigo.com/static/ae_logo.png'
+                        logo: 'https://kenya.{{ .ENV }}.wuamerigo.com/static/ae_logo.png'
+                    },
+                    theme: {
+                        main: {
+                            color: '#ff0000',
+                            bg: '#32a852',
+                            urlColor: '#368abb',
+                            fontFamily: 'Bradley Hand;'
+                        },
+                        button: {
+                            radius: 30,
+                            bg: '#000000'
+                        }
                     },
                     start_with_history: true,
                     history_buttons: true,

@@ -3,7 +3,6 @@ package routes
 import (
 	"encoding/json"
 	"fmt"
-
 	//log "github.com/sirupsen/logrus"
 	"io/ioutil"
 	"net/http"
@@ -41,6 +40,7 @@ func ReqGetAccess_Token(q, w string) string {
 	if err != nil {
 		fmt.Println("Error reading body. ", err)
 	}
+	fmt.Println(resp.Body)
 
 	//Parse JSON
 	textBytes := []byte(body)

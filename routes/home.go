@@ -32,12 +32,13 @@ var Secret_Key string = GetString("Secret_Key")
 var Aus string = ClientID + ":" + Secret_Key
 var Access_Token string
 var authorize_code string
-var URLq string = "https://" + GetString("URL") + "/admin/api/1/oauth2/token"
-var UrlAuthorize string = "https://" + GetString("URL") + "/admin/api/1/customers/authorize"
+var URLq string = "https://portal.kenya." + GetString("ENV") + ".wuamerigo.com/admin/api/1/oauth2/token"
+var UrlAuthorize string = "https://portal.kenya." + GetString("ENV") + ".wuamerigo.com/admin/api/1/customers/authorize"
 var JWT_header_payload string
 var Send_receive string
 var Approv_Hold_Reject string
 var URL_Admin string
+var Envairment string = GetString("ENV")
 
 // Make token
 func Token() string {
@@ -46,7 +47,8 @@ func Token() string {
 
 type ViewData struct {
 	Available bool
-	JW        string
+	JW string
+	ENV string
 	PublicKey string
 }
 
@@ -60,6 +62,7 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	posts := ViewData{
 		Available: false,
 		JW:        HashSt,
+		ENV: Envairment,
 		PublicKey: GetString("publicKey"),
 	}
 
@@ -130,7 +133,7 @@ func IndexApproveSend(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("<p><span style=\"color: #ff0000;\"><strong>Not all fields are filled</strong></span></p>"))
 	} else {
 
-		URL_Admin = "https://" + GetString("URL") + "/admin/api/1/" + Send_receive + "_transactions/" + Approv_Hold_Reject
+		URL_Admin = "https://portal.kenya." + GetString("ENV") + ".wuamerigo.com/admin/api/1/" + Send_receive + "_transactions/" + Approv_Hold_Reject
 
 		w.Write([]byte(ChangeStatus(Id_Number_, URL_Admin, Access_Token)))
 	}

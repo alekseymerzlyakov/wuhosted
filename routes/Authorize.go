@@ -59,7 +59,7 @@ func Authorize(url, Access_Token string) string {
 
 	// Set headers
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", "Bearer "+Access_Token)
+	req.Header.Set("Authorization", "Bearer " + Access_Token)
 
 	// Create and Add cookie to request
 	//cookie := http.Cookie{Name: "cookie_name", Value: "cookie_value"}
