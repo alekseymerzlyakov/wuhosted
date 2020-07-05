@@ -42,10 +42,10 @@
 
 
     </style>
-    <link rel="shortcut icon" href="https://{{ .Country }}.{{ .ENV }}.wuamerigo.com/favicon.png">
+    <link rel="shortcut icon" href="https://ukraine.{{ .ENV }}.wuamerigo.com/favicon.png">
 
     <script type="text/javascript"
-            src="https://{{ .Country }}.{{ .ENV }}.wuamerigo.com/wuHosted.js?da691be54d0f14508652"></script>
+            src="https://ukraine.{{ .ENV }}.wuamerigo.com/wuHosted.js?da691be54d0f14508652"></script>
 </head>
 <body>
 
@@ -142,32 +142,32 @@
         <td style="width: 80%;">
 
 
-            <header>Aleks Bank</header>
+            <header>Partner bank header</header>
             <div id="root"></div>
-            <footer>Dno</footer>
+            <footer>Partner bank footer</footer>
             {{if .Available}}
-                <p>Дичь</p>
+                <p>Available</p>
             {{end}}
             <script type="text/javascript">WUHosted.init({
                     container: document.getElementById('root'),
                     publicKey: '{{ .PublicKey }}',
                     jwt: '{{ .JW }}',
                     unixtime: Math.round(new Date().getTime() / 1000).toString(),
-                    lang: '{{ .Lang }}',
-                    action: '{{ .Actions }}',
+                    lang: 'en',
+                    action: 'history',
                     settings: {
-                        logo: 'https://{{ .Country }}.{{ .ENV }}.wuamerigo.com/static/ae_logo.png'
+                        logo: 'https://ukraine.{{ .ENV }}.wuamerigo.com/static/ae_logo.png'
                     },
                     theme: {
                         main: {
-                            color: '#767676',
-                            bg: '#ffffff',
+                            color: '#ff0000',
+                            bg: '#212a33',
                             urlColor: '#368abb',
-                            fontFamily: 'HelveticaNeue,HelveticaNeue,HelveticaNeueRoman,HelveticaNeue-Roman,HelveticaNeueRoman,TeXGyreHerosRegular,Helvetica,Tahoma,Geneva,Arial,sans-serif'
+                            fontFamily: 'Bradley Hand;'
                         },
                         button: {
                             active: {
-                                bg: '#fa5255',
+                                bg: '#ffffff',
                                 radius: 5,
                                 color: '#000000'
                             },
@@ -188,7 +188,7 @@
                     },
                     start_with_history: true,
                     history_buttons: true,
-                    country: '{{ .Country }}'
+                    country: 'ukraine'
                 });
             </script>
         </td>

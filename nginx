@@ -1,0 +1,79 @@
+server {
+    index index.html index.htm;
+        server_name  wu-test-iframe.corezoid.com;
+        root         /usr/share/nginx/html;
+
+        # Load configuration files for the default server block.
+        include /etc/nginx/default.d/*.conf;
+
+        location /wu/ {
+        proxy_pass http://127.0.0.1:8081;
+        proxy_redirect off;
+        }
+        
+        location /wu/approvesend/ {
+        proxy_pass http://127.0.0.1:8081;
+        proxy_redirect http://127.0.0.1:8081 https://wu-test-iframe.corezoid.com/wu/approvesend;
+        }
+
+        location /approvesend/ {
+        proxy_pass http://127.0.0.1:8081;
+        proxy_redirect off;
+        }
+
+
+
+
+        
+
+        error_page 404 /404.html;
+            location = /40x.html {
+        }
+
+        error_page 500 502 503 504 /50x.html;
+            location = /50x.html {
+        }
+    
+    listen [::]:443 ssl ipv6only=on; # managed by Certbot
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/wu-test-iframe.corezoid.com/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/wu-test-iframe.corezoid.com/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+}
+    server {
+    if ($host = wu-test-iframe.corezoid.com) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+        listen       80 default_server;
+        listen       [::]:80 default_server;
+        server_name  wu-test-iframe.corezoid.com;
+    return 404; # managed by Certbot
+
+
+}
+
+
+
+
+
+
+server {
+    index index.html index.htm;
+        server_name  wu-test-iframe.corezoid.com;
+        listen       8081;
+        root         /usr/share/nginx/html/wu;
+
+        # Load configuration files for the default server block.
+        include /etc/nginx/default.d/*.conf;
+    
+    listen [::]:443 ssl ipv6only=on; # managed by Certbot
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/wu-test-iframe.corezoid.com/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/wu-test-iframe.corezoid.com/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+}

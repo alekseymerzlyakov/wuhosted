@@ -1,4 +1,4 @@
-package routes
+package main
 
 import (
 	"bytes"
@@ -39,15 +39,22 @@ func Authorize(url, Access_Token string) string {
   "bank_accounts": [
 	{
   	"account_number": "` + GetString("account_number") + `",
+	"routing_number": "22345612345",
   	"name": "` + GetString("name") + `",
-  	"currency": "` + GetString("currency") + `",
-  	"balance": "` + GetString("balance") + `"
+	"type": "savings",
+  	"currency": "` + Currency + `",
+  	"balance": "` + GetString("balance") + `",
+	"limit": "100"
 	},
 		{
   	"account_number": "` + GetString("account_number2") + `",
+	"routing_number": "993456123456",
   	"name": "` + GetString("name2") + `",
-  	"currency": "` + GetString("currency2") + `",
-  	"balance": "` + GetString("balance2") + `"
+	"type": "savings",
+  	"currency": "` + Currency2 + `",
+  	"balance": "11",
+	"limit": "100"
+
 	}
   ]
 }`)
@@ -56,10 +63,10 @@ func Authorize(url, Access_Token string) string {
 	if err != nil {
 		log.Fatal("Error reading requests. ", err)
 	}
-
+	//"balance": "` + GetString("balance2") + `"
 	// Set headers
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", "Bearer " + Access_Token)
+	req.Header.Set("Authorization", "Bearer "+ Access_Token)
 
 	// Create and Add cookie to request
 	//cookie := http.Cookie{Name: "cookie_name", Value: "cookie_value"}
