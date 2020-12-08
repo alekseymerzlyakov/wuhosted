@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	log "github.com/sirupsen/logrus"
 	"io/ioutil"
 	"net/http"
@@ -14,8 +15,8 @@ type Respon struct {
 	Action_info string `json:"action_info"`
 }
 
-// Post Request
-func Authorize(url, Access_Token string) string {
+func Authorize_Request() []byte {
+	fmt.Println("open func Authorize_Request()")
 
 	data := []byte(`{
   "customer_id": "` + GetString("customer_id") + `",
@@ -39,34 +40,44 @@ func Authorize(url, Access_Token string) string {
   "bank_accounts": [
 	{
   	"account_number": "` + GetString("account_number") + `",
-	"routing_number": "22345612345",
+	"routing_number": "22345612346",
   	"name": "` + GetString("name") + `",
 	"type": "savings",
   	"currency": "` + Currency + `",
   	"balance": "` + GetString("balance") + `",
-	"limit": "100"
-	},
-		{
-  	"account_number": "` + GetString("account_number2") + `",
-	"routing_number": "993456123456",
-  	"name": "` + GetString("name2") + `",
-	"type": "savings",
-  	"currency": "` + Currency2 + `",
-  	"balance": "11",
-	"limit": "100"
-
-	}
+	"limit": "10000"
+	 }
   ]
 }`)
 
-	req, err := http.NewRequest("PUT", url, bytes.NewBuffer(data))
+	return data
+}
+
+// Post Request
+func Authorize(url, Access_Token, X_Time, data string) string {
+
+	fmt.Println("Authorize url -> ", url)
+	fmt.Println("Authorize X-Signature -> ", Access_Token)
+	fmt.Println("Authorize X_Time -> ", X_Time)
+	fmt.Println("Authorize X-Id -> ", PublicKey)
+	fmt.Println("Authorize data -> ", string(data))
+
+	log.Println("Authorize url -> ", url)
+	log.Println("Authorize X-Signature -> ", Access_Token)
+	log.Println("Authorize X_Time -> ", X_Time)
+	log.Println("Authorize X-Id -> ", PublicKey)
+	log.Println("Authorize data -> ", string(data))
+
+	req, err := http.NewRequest("PUT", url, bytes.NewBuffer([]byte(data)))
 	if err != nil {
 		log.Fatal("Error reading requests. ", err)
 	}
 	//"balance": "` + GetString("balance2") + `"
 	// Set headers
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", "Bearer "+ Access_Token)
+	req.Header.Set("X-Signature", Access_Token)
+	req.Header.Set("X-Time", X_Time)
+	req.Header.Set("X-Id", PublicKey)
 
 	// Create and Add cookie to request
 	//cookie := http.Cookie{Name: "cookie_name", Value: "cookie_value"}
@@ -77,24 +88,28 @@ func Authorize(url, Access_Token string) string {
 
 	// Validate cookie and headers are attached
 	//fmt.Println(req.Cookies())
-	//log.Info(req.Header)
-	//log.Info(req.Body)
+	//fmt.Println(req.Header)
+	//fmt.Println(req.Body)
 
+	fmt.Println("req -> ", req)
+	log.Println("req -> ", req)
 	// Send request
 	resp, err := client.Do(req)
 	if err != nil {
-		//log.Fatal("Error reading response. ", err)
+		log.Fatal("Error reading response. ", err)
 	}
 	defer resp.Body.Close()
 
-	log.Info("response Status:", resp.Status)
-	log.Println("response Headers:", resp.Header)
+	fmt.Println("response Status:   ---- >    ", resp.Status)
+	fmt.Println("response Headers:   ---- >    ", resp.Header)
+	log.Println("response Status:   ---- >    ", resp.Status)
+	log.Println("response Headers:   ---- >    ", resp.Header)
 
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		log.Fatal("Error reading body. ", err)
 	}
-
+	log.Println("response body:   ---- >    ", string(body))
 	//log.Info("%s\n", body)
 	//Parse JSON
 

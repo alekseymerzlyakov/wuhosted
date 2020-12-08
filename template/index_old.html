@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Western Union</title>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+    <meta charset="utf-8">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1">
+    <style>html {
+            height: 100%;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100%;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        header {
+            height: 80px;
+            background-color: #212a33;
+            font-size: 20px;
+            font-weight: bold;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        footer {
+            height: 80px;
+            background-color: #777777;
+            font-size: 20px;
+            font-weight: bold;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+
+    </style>
+    <link rel="shortcut icon" href="https://{{ .Country }}.{{ .ENV }}.wuamerigo.com/favicon.png">
+
+    <script type="text/javascript"
+            src="https://{{ .Country }}.{{ .ENV }}.wuamerigo.com/wuHosted.js?da691be54d0f14508652"></script>
+</head>
+<body>
+
+<table style="height: 100%; width: 100%;">
+    <tbody>
+    <tr>
+        <td style="width: 20%; vertical-align: top;">&nbsp; &nbsp;
+            <div style="width: 100%; height: 36px; vertical-align: top; text-align: center;font-size: 24px; ">ADMIN
+                PANEL
+            </div>
+
+            <form id="form1" class="ui-form" method="post">
+                <h3>Transaction ID number</h3>
+                <div class="form-row">
+                    <input id="idnumber" type="text" name="idnumber" required autocomplete="on"><label
+                            for="idnumber"></label></div>
+                <br><br>
+                <h2>Change transaction to ...</h2>
+                <select id="list" name="list1">
+                    <option value="notselected">Select action</option>
+                    <option value="ApproveSendTransaction">Send - change transaction to Approve</option>
+                    <option value="HoldSendTransaction">Send - change transaction to Hold</option>
+                    <option value="RejectSendTransaction">Send - change transaction to Reject</option>
+                    <option value="ApproveReceiveTransaction">Receive - change transaction to Approve</option>
+                    <option value="HoldReceiveTransaction">Receive - change transaction to Hold</option>
+                    <option value="RejectReceiveTransaction">Receive - change transaction to Reject</option>
+                </select>
+                <br><br>
+                <p>
+                    <button id="button1" class="button" name="button" type="button" value="Submit1">Change Status
+                        Transaction
+                    </button>
+                </p>
+                <p><b>API Response</b></p>
+                <div id="response"></div>
+            </form>
+
+            <script>
+                $(document).ready(function () {
+                    //IT will save the data
+                    $('#button1').on('click', function (e) {
+                        button = this.value;
+                        $('#response').html("<b>Loading response...</b>");
+                        $('#response2').html(button);
+                        //e.preventDefault();
+                        if (button === "Submit1") {
+                            var ID_Number = $("#idnumber").val();
+                            var List = $("#list").val();
+
+                            $.ajax({
+                                url: 'approvesend',
+                                // dataType: 'json',
+                                dataType: 'html',
+                                type: 'post',
+                                contentType: 'application/json',
+                                data: JSON.stringify({'idnumber': ID_Number, 'list': List}),
+                                //data: { 'idnumber': ID_Number} ,
+                                processData: true,
+                                success: function (result) {
+                                    $('#response').html(result)
+                                },
+                                error: function (jqXhr, textStatus, errorThrown) {
+                                    //console.log( errorThrown );
+                                    $('#response').html(result);
+                                }
+                            });
+
+                        }
+                    });
+                });
+
+
+                // // This will search and I want the result in the success
+                // $('#button2').on('click', function(e){
+                // button=this.value;
+                // console.log(button);
+                // e.preventDefault();
+                // var Email =$("#email").val();
+                // $.ajax({
+                // url:"/get-data",
+                // type: "GET",
+                // data:{'button':button,"email":Email},
+                // success: function(results){
+                // console.log(results)
+                // $('#response').html(results);
+                // }
+                // });
+                // });
+                // });
+            </script>
+        </td>
+
+
+        <td style="width: 80%;">
+
+
+            <header>Aleks Bank</header>
+            <div id="root"></div>
+            <footer>Dno</footer>
+            {{if .Available}}
+                <p>Дичь</p>
+            {{end}}
+            <script type="text/javascript">WUHosted.init({
+                    container: document.getElementById('root'),
+                    publicKey: '{{ .PublicKey }}',
+                    jwt: '{{ .JW }}',
+                    unixtime: Math.round(new Date().getTime() / 1000).toString(),
+                    lang: '{{ .Lang }}',
+                    action: '{{ .Actions }}',
+                    settings: {
+                        logo: 'https://{{ .Country }}.{{ .ENV }}.wuamerigo.com/static/ae_logo.png'
+                    },
+                    theme: {
+                        main: {
+                            color: '#767676',
+                            bg: '#ffffff',
+                            urlColor: '#368abb',
+                            fontFamily: 'HelveticaNeue,HelveticaNeue,HelveticaNeueRoman,HelveticaNeue-Roman,HelveticaNeueRoman,TeXGyreHerosRegular,Helvetica,Tahoma,Geneva,Arial,sans-serif'
+                        },
+                        button: {
+                            active: {
+                                bg: '#fa5255',
+                                radius: 5,
+                                color: '#000000'
+                            },
+                            inActive: {
+                                bg: '#000000',
+                                radius: 5,
+                                color: '#ffffff'
+                            }
+                        },
+                        url: {
+                            active: {
+                                color: '#ffffff'
+                            },
+                            inActive: {
+                                color: '#fff000'
+                            }
+                        }
+                    },
+                    start_with_history: true,
+                    history_buttons: true,
+                    country: '{{ .Country }}'
+                });
+            </script>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

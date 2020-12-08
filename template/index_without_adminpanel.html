@@ -52,92 +52,9 @@
 <table style="height: 100%; width: 100%;">
     <tbody>
     <tr>
-        <td style="width: 1%; vertical-align: top;">&nbsp; &nbsp;
-            <div style="width: 100%; height: 36px; vertical-align: top; text-align: center;font-size: 24px; ">ADMIN PANEL</div>
-
-            <form id="form1" class="ui-form" method="post">
-                <h3>Transaction ID number</h3>
-                <div class="form-row">
-                    <input id="idnumber" type="text" name="idnumber" required autocomplete="on"><label
-                            for="idnumber"></label></div>
-                <br><br>
-                <h2>Change transaction to ...</h2>
-                <select id="list" name="list1">
-                    <option value="notselected">Select action</option>
-                    <option value="ApproveSendTransaction">Send - change transaction to Approve</option>
-                    <option value="HoldSendTransaction">Send - change transaction to Hold</option>
-                    <option value="RejectSendTransaction">Send - change transaction to Reject</option>
-                    <option value="ApproveReceiveTransaction">Receive - change transaction to Approve</option>
-                    <option value="HoldReceiveTransaction">Receive - change transaction to Hold</option>
-                    <option value="RejectReceiveTransaction">Receive - change transaction to Reject</option>
-                </select>
-                <br><br>
-                <p>
-                    <button id="button1" class="button" name="button" type="button" value="Submit1">Change Status
-                        Transaction
-                    </button>
-                </p>
-                <p><b>API Response</b></p>
-                <div id="response"></div>
-            </form>
-
-            <script>
-                $(document).ready(function () {
-                    //IT will save the data
-                    $('#button1').on('click', function (e) {
-                        button = this.value;
-                        $('#response').html("<b>Loading response...</b>");
-                        $('#response2').html(button);
-                        //e.preventDefault();
-                        if (button === "Submit1") {
-                            var ID_Number = $("#idnumber").val();
-                            var List = $("#list").val();
-
-                            $.ajax({
-                                url: 'approvesend',
-                                // dataType: 'json',
-                                dataType: 'html',
-                                type: 'post',
-                                contentType: 'application/json',
-                                data: JSON.stringify({'idnumber': ID_Number, 'list': List}),
-                                //data: { 'idnumber': ID_Number} ,
-                                processData: true,
-                                success: function (result) {
-                                    $('#response').html(result)
-                                },
-                                error: function (jqXhr, textStatus, errorThrown) {
-                                    //console.log( errorThrown );
-                                    $('#response').html(result);
-                                }
-                            });
-
-                        }
-                    });
-                });
 
 
-                // // This will search and I want the result in the success
-                // $('#button2').on('click', function(e){
-                // button=this.value;
-                // console.log(button);
-                // e.preventDefault();
-                // var Email =$("#email").val();
-                // $.ajax({
-                // url:"/get-data",
-                // type: "GET",
-                // data:{'button':button,"email":Email},
-                // success: function(results){
-                // console.log(results)
-                // $('#response').html(results);
-                // }
-                // });
-                // });
-                // });
-            </script>
-        </td>
-
-
-        <td style="width: 99%;">
+        <td style="width: 100%;">
 
 
             <header>Aleks Bank</header>

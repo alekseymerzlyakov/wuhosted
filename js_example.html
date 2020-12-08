@@ -1,0 +1,43 @@
+WUHosted.init({
+                    container: document.getElementById('root'),
+                    device: 'web',
+                    merchant: 'gQltG',
+                    jwt: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpemF0aW9uX2NvZGUiOiJDOEhZN0wwTkVNWTBYQkNYSTA2V1ZJSjhBSUNWNFc5UCJ9.JqrYuHIuHeEm+lBCtuu3cWddNm1NwbC2KRRejBXsFXo=',
+                    unixtime: Math.round(new Date().getTime() / 1000).toString(),
+                    lang: 'en',
+                    action: 'history',
+                    settings: {
+                        logo: 'https://ukraine.uat.wuamerigo.com/static/ae_logo.png'
+                    },
+                    theme: {
+                        main: {
+                            color: '#767676',
+                            bg: '#ffffff',
+                            urlColor: '#368abb',
+                            fontFamily: 'HelveticaNeue,HelveticaNeue,HelveticaNeueRoman,HelveticaNeue-Roman,HelveticaNeueRoman,TeXGyreHerosRegular,Helvetica,Tahoma,Geneva,Arial,sans-serif'
+                        },
+                        button: {
+                            active: {
+                                bg: '#fa5255',
+                                radius: 5,
+                                color: '#000000'
+                            },
+                            inActive: {
+                                bg: '#000000',
+                                radius: 5,
+                                color: '#ffffff'
+                            }
+                        },
+                        url: {
+                            active: {
+                                color: '#ffffff'
+                            },
+                            inActive: {
+                                color: '#fff000'
+                            }
+                        }
+                    },
+                    start_with_history: true,
+                    history_buttons: true,
+                    country: 'ukraine'
+                });
