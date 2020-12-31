@@ -16,7 +16,7 @@ type Respon struct {
 }
 
 func Authorize_Request() []byte {
-	fmt.Println("open func Authorize_Request()")
+	fmt.Println("\nopen func Authorize_Request()\n")
 
 	data := []byte(`{
   "customer_id": "` + GetString("customer_id") + `",
@@ -56,21 +56,22 @@ func Authorize_Request() []byte {
 // Post Request
 func Authorize(url, Access_Token, X_Time, data string) string {
 
-	fmt.Println("Authorize url -> ", url)
-	fmt.Println("Authorize X-Signature -> ", Access_Token)
-	fmt.Println("Authorize X_Time -> ", X_Time)
-	fmt.Println("Authorize X-Id -> ", PublicKey)
-	fmt.Println("Authorize data -> ", string(data))
+	fmt.Println("\nAuthorize url -> ", url)
+	fmt.Println("\nAuthorize X-Signature -> ", Access_Token)
+	fmt.Println("\nAuthorize X_Time -> ", X_Time)
+	fmt.Println("\nAuthorize X-Id -> ", PublicKey)
+	fmt.Println("\nAuthorize data -> ", string(data))
 
-	log.Println("Authorize url -> ", url)
-	log.Println("Authorize X-Signature -> ", Access_Token)
-	log.Println("Authorize X_Time -> ", X_Time)
-	log.Println("Authorize X-Id -> ", PublicKey)
-	log.Println("Authorize data -> ", string(data))
+	log.Println("\nAuthorize url -> ", url)
+	log.Println("\nAuthorize X-Signature -> ", Access_Token)
+	log.Println("\nAuthorize X_Time -> ", X_Time)
+	log.Println("\nAuthorize X-Id -> ", PublicKey)
+	log.Println("\nAuthorize data -> ", string(data))
 
 	req, err := http.NewRequest("PUT", url, bytes.NewBuffer([]byte(data)))
 	if err != nil {
-		log.Fatal("Error reading requests. ", err)
+		log.Println("\nError reading requests. ", err)
+		fmt.Println("\nError reading requests. ", err)
 	}
 	//"balance": "` + GetString("balance2") + `"
 	// Set headers
@@ -91,25 +92,33 @@ func Authorize(url, Access_Token, X_Time, data string) string {
 	//fmt.Println(req.Header)
 	//fmt.Println(req.Body)
 
-	fmt.Println("req -> ", req)
-	log.Println("req -> ", req)
+	fmt.Println("\nreq -> ", req)
+	log.Println("\nreq -> ", req)
 	// Send request
 	resp, err := client.Do(req)
+
 	if err != nil {
-		log.Fatal("Error reading response. ", err)
+		log.Println("\nError reading response. ", err)
+		fmt.Println("\nError reading response. ", err)
 	}
 	defer resp.Body.Close()
 
-	fmt.Println("response Status:   ---- >    ", resp.Status)
-	fmt.Println("response Headers:   ---- >    ", resp.Header)
-	log.Println("response Status:   ---- >    ", resp.Status)
-	log.Println("response Headers:   ---- >    ", resp.Header)
+	fmt.Println("\nresponse Status:   ---- >    ", resp.Status)
+	fmt.Println("\nresponse Headers:   ---- >    ", resp.Header)
+
+	log.Println("\nresponse Status:   ---- >    ", resp.Status)
+	log.Println("\nresponse Headers:   ---- >    ", resp.Header)
+
+	fmt.Println("\nresp.StatusCode   ---- >    ", resp.StatusCode)
+	log.Println("\nresp.StatusCode   ---- >    ", resp.StatusCode)
 
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		log.Fatal("Error reading body. ", err)
+		log.Println("\nError reading body. ", err)
+		fmt.Println("\nError reading body. ", err)
 	}
-	log.Println("response body:   ---- >    ", string(body))
+	log.Println("\nresponse body:   ---- >    ", string(body))
+	fmt.Println("\nresponse body:   ---- >    ", string(body))
 	//log.Info("%s\n", body)
 	//Parse JSON
 

@@ -156,6 +156,17 @@
                     lang: '{{ .Lang }}',
                     action: '{{ .Actions }}',
                     settings: {
+                        preloader: {
+                            imageType: 'svg',
+                            src: '/static/monobank/loader.svg',
+                            style: {
+                                width: 50,
+                                height: 50,
+                                backgroundColor: '#ffffff',
+                                borderRadius: 8,
+                                boxShadow: 'rgba(0, 0, 0, 0.12) 0px 1px 6px'
+                            }
+                        },
                         logo: '{{ .WuHosted }}/static/ae_logo.png'
                     },
                     theme: {

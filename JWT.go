@@ -16,7 +16,8 @@ type HashTag struct {
 //Base64
 func Encoded(base string) string {
 	encoded := base64.StdEncoding.EncodeToString([]byte(base))
-	log.Println("encoded      " + encoded)
+	log.Println("\nencoded      " + encoded)
+	fmt.Println("\nencoded      " + encoded)
 	return encoded
 }
 
@@ -29,18 +30,18 @@ func JWT() {
 	request_body_autorize = strings.ReplaceAll(request_body_autorize, "\r", "")
 	request_body_autorize = strings.ReplaceAll(request_body_autorize, "\n", "")
 
-	fmt.Println("Secret      " + SecretKey)
-	log.Println("Secret      " + SecretKey)
+	fmt.Println("\nSecret      " + SecretKey)
+	log.Println("\nSecret      " + SecretKey)
 
-	fmt.Println("request_body_autorize     ---->        " + request_body_autorize)
-	log.Println("request_body_autorize     ---->        " + request_body_autorize)
+	fmt.Println("\nrequest_body_autorize     ---->        " + request_body_autorize)
+	log.Println("\nrequest_body_autorize     ---->        " + request_body_autorize)
 
 	X_Time := Time()
-	fmt.Println("X_Time      " + X_Time)
+	fmt.Println("\nX_Time      " + X_Time)
 
 	Path := "/api/2/customers/authorize"
-	fmt.Println("Path      " + Path)
-	log.Println("Path      " + Path)
+	fmt.Println("\nPath      " + Path)
+	log.Println("\nPath      " + Path)
 
 	Content := Path + request_body_autorize
 	combined := X_Time + SecretKey + Content + SecretKey
@@ -49,8 +50,8 @@ func JWT() {
 
 	////Authorize
 	authorize_code = Authorize(UrlAuthorize, generatedSignature, X_Time, request_body_autorize)
-	fmt.Println("authorize_code ---- >>>   ", authorize_code)
-	log.Println("authorize_code ---- >>>   ", authorize_code)
+	fmt.Println("\nauthorize_code ---- >>>   ", authorize_code)
+	log.Println("\nauthorize_code ---- >>>   ", authorize_code)
 
 	var header string = "{\"typ\":\"JWT\",\"alg\":\"HS256\"}"
 	var payload string = "{\"authorization_code\":\"" + authorize_code + "\"}"
@@ -66,7 +67,7 @@ func Hash(src string, secret string) string {
 	h := hmac.New(sha256.New, key)
 	h.Write([]byte(src))
 	var jw = src + "." + base64.StdEncoding.EncodeToString(h.Sum(nil))
-	fmt.Println("JWT      ", jw)
-	log.Println("JWT      ", jw)
+	fmt.Println("\nJWT    --->    ", jw)
+	log.Println("\nJWT    --->    ", jw)
 	return jw
 }

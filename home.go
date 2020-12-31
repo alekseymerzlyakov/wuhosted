@@ -39,7 +39,7 @@ var JWT_header_payload string
 var Send_receive string
 var Approv_Hold_Reject string
 var URL_Admin string
-var Envairment string = GetString("ENV")
+var Envairment string
 var PublicKey string
 var SecretKey string
 var Currency string
@@ -48,6 +48,7 @@ var Message string
 var Action string
 var Lang string
 var CountryTeg string
+var Env string
 
 // Make token
 func Token() string {
@@ -71,73 +72,120 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 
 	u, _ := url.Parse(r.URL.String())
 
+	if u.Query()["env"] != nil {
+		Env = u.Query()["env"][0]
+		Envairment = Env
+		fmt.Println("\nenv -- >>>   ", u.Query()["env"][0])
+	} else {
+		fmt.Println("\nIncorrect env - this parameter mast contain pi or uat value")
+
+		Message = "Incorrect env - this parameter mast contain pi or uat value"
+		Availables = true
+	}
+
 	if u.Query()["country"] != nil {
 		CountryTeg = u.Query()["country"][0]
-		fmt.Println("country -- >>>   ", u.Query()["country"][0])
+		fmt.Println("\ncountry -- >>>   ", u.Query()["country"][0])
 	} else {
-		fmt.Println("Incorrect country - country not sent")
+		fmt.Println("I\nncorrect country - country not sent")
 
-		Message = "Incorrect country - country not sent"
+		Message = "\nIncorrect country - country not sent"
 		Availables = true
 	}
 
 	if u.Query()["lang"] != nil {
 		Lang = u.Query()["lang"][0]
-		fmt.Println("lang -- >>>   ", u.Query()["lang"][0])
+		fmt.Println("\nlang -- >>>   ", u.Query()["lang"][0])
 	} else {
-		fmt.Println("Incorrect lang - lang not sent")
-		Message = "Incorrect lang - lang not sent"
+		fmt.Println("\nIncorrect lang - lang not sent")
+		Message = "\nIncorrect lang - lang not sent"
 		Availables = true
 
 	}
 
 	if u.Query()["action"] != nil {
 		Action = u.Query()["action"][0]
-		fmt.Println("action -- >>>   ", u.Query()["action"][0])
+		fmt.Println("\naction -- >>>   ", u.Query()["action"][0])
 	} else {
-		fmt.Println("Incorrect action - action not sent")
-		Message = "Incorrect action - action not sent"
+		fmt.Println("\nIncorrect action - action not sent")
+		Message = "\nIncorrect action - action not sent"
 		Availables = true
 	}
 
 	if u.Query()["currency"] != nil {
 		Currency = u.Query()["currency"][0]
-		fmt.Println("action -- >>>   ", u.Query()["currency"][0])
+		fmt.Println("\ncurrency -- >>>   ", u.Query()["currency"][0])
 	} else {
-		fmt.Println("Incorrect currency - currency not sent")
-		Message = "Incorrect currency - currency not sent"
+		fmt.Println("\nIncorrect currency - currency not sent")
+		Message = "\nIncorrect currency - currency not sent"
 		Availables = true
 	}
 
 	switch {
+
+	case strings.EqualFold(CountryTeg, "morocco") && strings.EqualFold(Env, "pi"):
+		WuHosted = "https://morocco." + Env + ".wuamerigo.com"
+		WuHosted_Portal = "https://portal.morocco." + Env + ".wuamerigo.com"
+		fmt.Println("\nCountry -- >>>   morocco")
+		Country = "morocco"
+		Device = "ios"
+
+		URLq = "https://portal." + Country + "." + Env + ".wuamerigo.com/admin/api/2/oauth2/token"
+		UrlAuthorize = "https://portal." + Country + "." + Env + ".wuamerigo.com/admin/api/2/customers/authorize"
+
+		//admin
+		//ClientID = "UA713575"
+		//Secret_Key = "uzB@LI4z#rF6QMiqGrnxDpPg"
+		//Aus = ClientID + ":" + Secret_Key
+		// NEW Merchant settings
+		PublicKey = "AvwMp"
+		SecretKey = "pBuyj!84xD!chF9dUEKL4LXzjBsA8S"
+		//Currency = "MAD"
+		Currency2 = "MAD"
+
+	case strings.EqualFold(CountryTeg, "morocco") && strings.EqualFold(Env, "uat"):
+		WuHosted = "https://morocco." + Env + ".wuamerigo.com"
+		WuHosted_Portal = "https://portal.morocco." + Env + ".wuamerigo.com"
+		fmt.Println("\nCountry -- >>>   morocco")
+		Country = "morocco"
+		Device = "ios"
+
+		URLq = "https://portal." + Country + "." + Env + ".wuamerigo.com/admin/api/2/oauth2/token"
+		UrlAuthorize = "https://portal." + Country + "." + Env + ".wuamerigo.com/admin/api/2/customers/authorize"
+
+		//admin
+		//ClientID = "UA713575"
+		//Secret_Key = "uzB@LI4z#rF6QMiqGrnxDpPg"
+		//Aus = ClientID + ":" + Secret_Key
+		// NEW Merchant settings
+		PublicKey = "AvwMp"
+		SecretKey = "pBuyj!84xD!chF9dUEKL4LXzjBsA8S"
+		//Currency = "MAD"
+		Currency2 = "MAD"
 
 	case strings.EqualFold(CountryTeg, "ukraine_prod"):
 		Country = "ukraine"
 		Device = "ios"
 		WuHosted = "https://ukraine-hosted.wu.com"
 		WuHosted_Portal = "https://portal.ukraine-hosted.wu.com"
-		fmt.Println("ukraine_prod -- >>>   ukraine_prod")
+		fmt.Println("\nCountry -- >>>   ukraine_prod")
 		URLq = "https://portal.ukraine-hosted.wu.com/admin/api/2/oauth2/token"
 		UrlAuthorize = "https://portal.ukraine-hosted.wu.com/admin/api/2/customers/authorize"
 
 		PublicKey = "_#P6t"
 		SecretKey = "Su5qj@BoFmlDg@qEnOz_#h4AjmGQ6X"
-		//Currency = "USD"
+		//Currency = "UAH"
 		Currency2 = "UAH"
-		fmt.Println("PublicKey -- >>>   ", PublicKey)
-		fmt.Println("SecretKey -- >>>   ", SecretKey)
-		fmt.Println("Currency -- >>>   ", Currency)
-		fmt.Println("Currency2 -- >>>   ", Currency2)
 
-	case strings.EqualFold(CountryTeg, "ukraine"):
-		WuHosted = "https://ukraine.uat.wuamerigo.com"
-		WuHosted_Portal = "https://portal.ukraine.uat.wuamerigo.com"
-		fmt.Println("ukraine -- >>>   ukraine")
+	case strings.EqualFold(CountryTeg, "ukraine") && strings.EqualFold(Env, "uat"):
+		WuHosted = "https://ukraine." + Env + ".wuamerigo.com"
+		WuHosted_Portal = "https://portal.ukraine." + Env + ".wuamerigo.com"
+		fmt.Println("\nCountry -- >>>   ukraine")
 		Country = "ukraine"
 		Device = "ios"
 
-		URLq = "https://portal." + Country + "." + GetString("ENV") + ".wuamerigo.com/admin/api/2/oauth2/token"
-		UrlAuthorize = "https://portal." + Country + "." + GetString("ENV") + ".wuamerigo.com/admin/api/2/customers/authorize"
+		URLq = "https://portal." + Country + "." + Env + ".wuamerigo.com/admin/api/2/oauth2/token"
+		UrlAuthorize = "https://portal." + Country + "." + Env + ".wuamerigo.com/admin/api/2/customers/authorize"
 
 		//admin
 		//ClientID = "UA713575"
@@ -146,6 +194,26 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 		// NEW Merchant settings
 		PublicKey = "3VGim"
 		SecretKey = "NRZpznGPwBtWbyd5PFtpw@dOKNgdqA"
+		//Currency = "USD"
+		Currency2 = "USD"
+
+	case strings.EqualFold(CountryTeg, "ukraine") && strings.EqualFold(Env, "pi"):
+		WuHosted = "https://ukraine." + Env + ".wuamerigo.com"
+		WuHosted_Portal = "https://portal.ukraine." + Env + ".wuamerigo.com"
+		fmt.Println("\nCountry -- >>>   ukraine")
+		Country = "ukraine"
+		Device = "ios"
+
+		URLq = "https://portal." + Country + "." + Env + ".wuamerigo.com/admin/api/2/oauth2/token"
+		UrlAuthorize = "https://portal." + Country + "." + Env + ".wuamerigo.com/admin/api/2/customers/authorize"
+
+		//admin
+		//ClientID = "UA713575"
+		//Secret_Key = "uzB@LI4z#rF6QMiqGrnxDpPg"
+		//Aus = ClientID + ":" + Secret_Key
+		// NEW Merchant settings
+		PublicKey = "ITXKG"
+		SecretKey = "h1B3JD6a!roSklKOqgKiocP8cs9QGg"
 		//Currency = "USD"
 		Currency2 = "USD"
 
@@ -198,11 +266,11 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Println("JWT")
 	JWT()
-	tmpl := template.Must(template.ParseFiles("template/index_without_adminpanel.html"))
-	fmt.Println(r.Header)
-	fmt.Println(r.Body)
-	log.Info(r.Header)
-	log.Info(r.Body)
+	tmpl := template.Must(template.ParseFiles("template/index.html"))
+	fmt.Println("\nr.Header ->   ", r.Header)
+	fmt.Println("\nr.Body ->   ", r.Body)
+	log.Info("\nr.Header ->   ", r.Header)
+	log.Info("\nr.Body ->   ", r.Body)
 
 	posts := ViewData{
 		Device:    Device,
@@ -231,10 +299,12 @@ func IndexApproveSend(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		fmt.Println(err)
 	}
-	fmt.Println(requestBody)
-	log.Println("func IndexApproveSend r.URL ---->>>>>>       ", r.URL)
-	log.Println("func IndexApproveSend r.Header ---->>>>>>       ", r.Header)
-	log.Println("func IndexApproveSend: Request Body ---->>>>>>       ", string(requestBody))
+	log.Println("\nfunc IndexApproveSend r.URL ---->>>>>>       ", r.URL)
+	log.Println("\nfunc IndexApproveSend r.Header ---->>>>>>       ", r.Header)
+	log.Println("\nfunc IndexApproveSend: Request Body ---->>>>>>       ", string(requestBody))
+	fmt.Println("\nfunc IndexApproveSend r.URL ---->>>>>>       ", r.URL)
+	fmt.Println("\nfunc IndexApproveSend r.Header ---->>>>>>       ", r.Header)
+	fmt.Println("\nfunc IndexApproveSend: Request Body ---->>>>>>       ", string(requestBody))
 	//Parse JSON
 	textBytes := []byte(requestBody)
 	respo2 := IdNum{}
@@ -287,12 +357,12 @@ func IndexApproveSend(w http.ResponseWriter, r *http.Request) {
 
 		URL_Admin = "/api/2/" + Send_receive + "_transactions/" + Approv_Hold_Reject
 
-		fmt.Println("Id_Number_   ----  >>>>       ", Id_Number_)
-		fmt.Println("URL_Admin   ----  >>>>       ", URL_Admin)
-		fmt.Println("Access_Token   ----  >>>>       ", Access_Token)
-		log.Println("Id_Number_   ----  >>>>       ", Id_Number_)
-		log.Println("URL_Admin   ----  >>>>       ", URL_Admin)
-		log.Println("Access_Token   ----  >>>>       ", Access_Token)
+		fmt.Println("\nId_Number_   ----  >>>>       ", Id_Number_)
+		fmt.Println("\nURL_Admin   ----  >>>>       ", URL_Admin)
+		fmt.Println("\nAccess_Token   ----  >>>>       ", Access_Token)
+		log.Println("\nId_Number_   ----  >>>>       ", Id_Number_)
+		log.Println("\nURL_Admin   ----  >>>>       ", URL_Admin)
+		log.Println("\nAccess_Token   ----  >>>>       ", Access_Token)
 
 		w.Write([]byte(ChangeStatus(Id_Number_, URL_Admin)))
 	}
